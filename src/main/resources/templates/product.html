@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management</title>
+    <style>
+      
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e1f5fe; 
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+
+        header {
+            background-color: rgb(20,101,112); 
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        header a.back-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 24px;
+            padding: 0 20px;
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .logout-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(20,101,112); 
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        form {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .form-group {
+            flex: 1 1 calc(30% - 20px); 
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="date"] {
+            width: calc(100% - 10px); 
+            padding: 8px;
+            margin-bottom: 10px; 
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        .input-button {
+    text-align: center;
+  
+
+}
+
+.input-button input[type="submit"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(20,101,112);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.input-button input[type="submit"]:hover {
+    background-color: #156D80;
+}
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color:rgb(20,101,112);
+            color: #fff;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #ddd;
+        }
+
+        .scrollable-table {
+            overflow-x: auto;
+            max-height: 400px; 
+        }
+
+        .scrollable-table table {
+            min-width: 800px;
+        }
+
+        .scrollable-table table th:first-child,
+        .scrollable-table table td:first-child {
+            min-width: 100px;
+        }
+
+        .scrollable-table table th:nth-child(2),
+        .scrollable-table table td:nth-child(2) {
+            min-width: 200px;
+        }
+
+        .scrollable-table table th:nth-child(3),
+        .scrollable-table table td:nth-child(3) {
+            min-width: 150px;
+        }
+
+        .scrollable-table table th:nth-child(4),
+        .scrollable-table table td:nth-child(4) {
+            min-width: 100px;
+        }
+
+        .scrollable-table table th:nth-child(5),
+        .scrollable-table table td:nth-child(5) {
+            min-width: 150px;
+        }
+
+        .scrollable-table table th:nth-child(6),
+        .scrollable-table table td:nth-child(6) {
+            min-width: 120px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/home" class="back-link" id="backbutton"><b> &#8592; </b></a>
+        <h2>Product Management</h2>
+        <a href="index" class="logout-button">Logout</a>
+    </header>
+
+    <div class="container">
+        <form action="/prod" method="post">
+            <div class="form-group">
+                <label for="prodid">PRODID:</label>
+                <input type="text" id="prodid" name="prodid" required>
+                <label for="quantity">QUANTITY:</label>
+                <input type="text" id="quantity" name="prodqty" required>
+            </div>
+            <div class="form-group">
+                <label for="name">NAME:</label>
+                <input type="text" id="name" name="prodname" required>
+                <label for="price">PRICE:</label>
+                <input type="text" id="price" name="prodprice" required>
+            </div>
+            <div class="form-group">
+                <label for="exp">EXPIRY DATE:</label>
+                <input type="date" id="exp" name="prodexp" required>
+                <label for="sid">SUPPLIER ID:</label>
+                <input type="text" id="sid" name="supid" required>
+            </div>
+        
+            <div class="form-group input-button">
+                <input type="submit" class="input-button" id="productadd" value="ADD">
+            </div>  
+        </form>
+
+        <div class="scrollable-table">
+            <h2 class="table-heading">Added Products:</h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Expiration Date</th>
+                        <th>Supplier ID</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="product-table-body">
+                   
+                </tbody>
+            </table>
+        </div> 
+
+        <div class="scrollable-table">
+            <h2 class="table-heading">Products Nearing Expiry</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Expiration Date</th>
+                        <th>Supplier ID</th>
+                    </tr>
+                </thead>
+                <tbody id="expiry-product-table-body">
+                  
+                </tbody>
+            </table>
+        </div>
+    </div> 
+
+
+        
+
+<script>
+   
+    function displayExpiryProducts(products) {
+        const container = document.getElementById('expiry-product-table-body');
+        container.innerHTML = '';
+        const currentDate = new Date();
+
+        const thresholdDate = new Date(currentDate);
+        thresholdDate.setDate(thresholdDate.getDate() + 7);
+        const nearingExpiryProducts = products.filter(product => new Date(product.prodexp) <= thresholdDate);
+        nearingExpiryProducts.forEach(product => {
+            const row = document.createElement('tr');
+            const rowHTML = `
+                <td>${product.prodid}</td>
+                <td>${product.prodname}</td>
+                <td>${product.prodqty}</td>
+                <td>${product.prodprice}</td>
+                <td>${product.prodexp}</td>
+                <td>${product.supid}</td>
+            `;
+            row.innerHTML = rowHTML;
+            container.appendChild(row);
+        });
+    }
+
+    function displayProducts(products) {
+  
+        const container = document.getElementById('product-table-body');
+        container.innerHTML = '';
+        products.forEach(product => {
+            const row = document.createElement('tr');
+            const rowHTML = `
+                <td>${product.prodid}</td>
+                <td>${product.prodname}</td>
+                <td>${product.prodqty}</td>
+                <td>${product.prodprice}</td>
+                <td>${product.prodexp}</td>
+                <td>${product.supid}</td>
+                <td><a href="/edit/${product.prodid}/${product.prodexp}" class="edit-button">Edit</a></td>
+                <td><a href="/delete/${product.prodid}/${product.prodexp}" class="delete-button">Delete</a></td>
+            `;
+            row.innerHTML = rowHTML;
+            container.appendChild(row);
+        });
+    }
+    fetch('/products_frontend')
+        .then(response => response.json())
+        .then(data => {
+            displayProducts(data);
+            displayExpiryProducts(data); 
+        })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+</body>
+</html>

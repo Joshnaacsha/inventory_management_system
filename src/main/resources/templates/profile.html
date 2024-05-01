@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e1f5fe;
+        }
+
+        header {
+            background-color:rgb(20,101,112); 
+            color: #fff;
+            padding: 5px;
+            text-align: center;
+            position: relative; 
+        }
+        header a.back-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 24px;
+            padding: 0 20px;
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .back-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(20,101,112); 
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .logout-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(20,101,112); 
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto; /* Adjust margin to center vertically */
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 10px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        span {
+            font-weight: bold;
+            color: rgb(20, 101, 112);
+        }
+
+        .container img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 50%; /* Make it circular */
+        }
+
+        @media only screen and (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/home" class="back-link" id="profileback"><b> &#8592; </b></a>
+        <h2>Profile</h2>
+        <a href="index" class="logout-button">Logout</a>
+    </header>
+
+    <div class="container">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0komsU0VA45-k4mJIv0lumh_ubbLYL0SPOsUN0aoOdg&s" alt="profile"/>
+        <p>Username: <span th:text="${user.username}"></span></p>
+        <p>Email: <span th:text="${user.email}"></span></p>
+        <p>Date Of Birth: <span th:text="${user.dateofbirth}"></span></p>
+        <p>Location: <span th:text="${user.location}"></span></p>
+        <p>Company: <span th:text="${user.companyname}"></span></p>
+    </div>
+</body>
+</html>

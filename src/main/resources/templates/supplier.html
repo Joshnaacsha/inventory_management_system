@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e1f5fe; 
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color:rgb(20,101,112); 
+            color: #fff;
+            padding: 5px;
+            text-align: center;
+            position: relative; 
+        }
+        header a.back-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 24px;
+            padding: 0 20px;
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .back-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(20,101,112); 
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .logout-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(20,101,112); 
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            flex: 0 0 120px; 
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        .form-group input {
+            flex: 1; 
+            padding: 8px;
+            border-radius: 2px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 2px;
+            background-color: rgb(20,101,112); 
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: rgb(20,101,112);
+            color: #fff;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #ddd;
+        }
+
+   
+        .scrollable-table {
+            overflow-x: auto;
+            max-height: 400px; 
+        }
+
+        .scrollable-table table {
+            min-width: 800px;
+        }
+
+        .scrollable-table table th:first-child,
+        .scrollable-table table td:first-child {
+            min-width: 100px;
+        }
+
+        .scrollable-table table th:nth-child(2),
+        .scrollable-table table td:nth-child(2) {
+            min-width: 200px;
+        }
+
+        .scrollable-table table th:nth-child(3),
+        .scrollable-table table td:nth-child(3) {
+            min-width: 150px;
+        }
+
+        .scrollable-table table th:nth-child(4),
+        .scrollable-table table td:nth-child(4) {
+            min-width: 100px;
+        }
+
+        .scrollable-table table th:nth-child(5),
+        .scrollable-table table td:nth-child(5) {
+            min-width: 150px;
+        }
+
+        .scrollable-table table th:nth-child(6),
+        .scrollable-table table td:nth-child(6) {
+            min-width: 120px;
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <a href="/home" class="back-link" id="supplierback"><b> &#8592; </b></a>
+        <h2>Supplier Management</h2>
+        <a href="index" class="logout-button">Logout</a>
+    </header>
+    <div class="container">
+        <form action="/sup" method="post">
+            <div class="form-group">
+                <label for="supid">SUPID:</label>
+                <input type="text" id="supid" name="supid" required>
+                <label for="suppliername">NAME:</label>
+                <input type="text" id="suppliername" name="suppliername" required>
+            </div>
+            <div class="form-group">
+                <label for="address">ADDRESS:</label>
+                <input type="text" id="address" name="address" required>
+                <label for="phone">PHONE:</label>
+                <input type="text" id="phone" name="phone" required>
+                <label for="email">EMAIL:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="buttons-container">
+                <input type="submit" class="button" value="ADD" id="supplier">
+            </div>  
+        </form>
+
+        <div class="scrollable-table">
+            <h2 class="table-heading">Suppliers List:</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="supplier-table-body">
+                    <tr th:each="supplier : ${suppliers}">
+                        <td th:text="${supplier.supid}"></td>
+                        <td th:text="${supplier.suppliername}"></td>
+                        <td th:text="${supplier.address}"></td>
+                        <td th:text="${supplier.phone}"></td>
+                        <td th:text="${supplier.email}"></td>
+                        <td>
+                            <a th:href="@{'/edit1/' + ${supplier.supid}}" class="edit-button">Edit</a>
+                        </td>
+                        <td>
+                            <a th:href="@{'/delete1/' + ${supplier.supid}}" class="delete-button">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function fetchAndAppendNewSuppliers() {
+            const existingIDs = Array.from(document.querySelectorAll('#supplier-table-body tr')).map(row => row.querySelector('td:first-child').textContent);
+
+            fetch('/supp')
+                .then(response => response.text()) 
+                .then(data => {
+                    const tempContainer = document.createElement('div');
+                    tempContainer.innerHTML = data;
+                    const tbody = document.getElementById('supplier-table-body');
+                    tempContainer.querySelectorAll('#supplier-table-body tr').forEach(row => {
+                        const newID = row.querySelector('td:first-child').textContent;
+                        if (!existingIDs.includes(newID)) {
+                            tbody.appendChild(row.cloneNode(true));
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+        fetchAndAppendNewSuppliers();
+    </script>
+</body>
+</html>

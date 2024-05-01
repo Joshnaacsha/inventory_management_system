@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bill Generation</title>
+  <style>
+     body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e1f5fe;
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+    header {
+            background-color:rgb(20, 101, 112);
+            color: #fff;
+            padding: 5px;
+            text-align: center;
+            position: relative;     
+        }
+    .container {
+      display: flex;
+      flex-wrap: wrap; /* Allow flex items to wrap */
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 20px;
+    }
+    .container > div {
+      flex: 1; /* Each div occupies equal space */
+      width: 100%; /* Ensure each div occupies full width */
+      margin-bottom: 20px; /* Add some space between divs */
+    }
+    label {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      input[type="text"],
+      input[type="password"] {
+        width: calc(100% - 20px); /* Adjust input width */
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+      }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .add-button, .clear-button, .print-button {
+      width: calc(100% - 20px); /* Adjust button width */
+      padding: 10px;
+      margin-bottom: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color:rgb(20, 101, 112);
+      color: white;
+    }
+    .add-button:hover, .clear-button:hover, .print-button:hover {
+      background-color:#558899;
+    }
+    .img{
+        width:max-content;
+        height:min-content;
+        align-items: center;
+        text-align: center;
+        margin-left: 10px;
+        left: -10px;
+    }
+    .back-button, .logout-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(20,101,112); 
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    .back-button {
+            left: 20px;
+        }
+    .logout-button {
+            right: 20px;
+        }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>Bill Generation</h2>
+    <a href="/home" class="back-button" id="billback">&#8592;</a> <!-- Use an arrow instead of "back" text -->
+    <a href="/home" class="logout-button">Logout</a>
+</header>
+  <div class="container">
+    <div class="left-side">
+      <h2>Add Items to Bill</h2>
+      <form id="bill-form" action="/billgen" method="post">  
+        <label for="bill-id">Bill ID:</label><br>
+        <input type="text" id="bill-id" name="billid" required><br>
+        <label for="product-id">Product ID:</label><br>
+        <input type="text" id="product-id" name="productid" required><br>
+        <label for="productname">Product Name:</label><br>
+        <input type="text" id="productname" name="productname" required><br>
+        <label for="quantity">Quantity:</label><br>
+        <input type="text" id="quantity" name="quantity" required><br>
+        <button type="submit" class="add-button" id="add">Add to Bill</button>
+        <button type="button" class="clear-button" id="clear">Clear</button>
+    </form>
+    
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQecV-Mb91ed6AIWZ8bMgToktKLF-0s6X9zGsd2XaS9qcP0ApTEbulvlhJDnn3XyUjXtBo&usqp=CAU" class="img">
+    </div>
+    <div class="right-side">
+        <h2>Bill Item</h2>
+      <table id="product-list">
+        <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>MRP</th>
+            <th>Total Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="products : ${product}">
+            <td th:text="${products.prodid}"></td>
+                            <td th:text="${products.prodname}"></td>
+                            <td th:text="${quantity}"></td>
+                            <td th:text="${products.prodprice}"></td>
+                            <td th:text="${totalPrice}"></td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <button class="print-button">Print Bill</button>
+    </div>
+  </div>
+</body>
+</html>

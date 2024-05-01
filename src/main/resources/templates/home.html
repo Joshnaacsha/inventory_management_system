@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-blue-100">
+    <nav class="bg-custom-color p-4 flex justify-between items-center">
+        <div class="flex items-center">
+            <a href="index" class="text-white mr-4"><i class="fas fa-arrow-left"></i> </a>
+        </div>
+        <div class="flex items-center">
+            <img src="https://i.ibb.co/3cYVzsM/logo1.png" alt="Logo" class="h-16 w-16 mr-2">
+            <h1 class="text-white text-2xl font-semibold">Inventory Management</h1>
+        </div>
+        <div class="flex items-center">
+            <a href="profile" class="text-white ml-4">
+                <img src="https://i.postimg.cc/65NtD2ff/profile-Photoroom-png-Photoroom.png" class="h-8 w-8 mr-2">
+            </a>
+            <a href="index" class="text-white"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </nav>
+
+    <div class="container mx-auto flex flex-col lg:flex-row mt-8 px-4">
+        <div class="w-full lg:w-1/2">
+            <img src="https://reviso-wordpress-sites.s3.amazonaws.com/uploads/sites/2/inventory-management-blog.png" alt="Image" class="w-full h-64 lg:h-full"> 
+        </div>
+        <div class="w-full lg:w-2/3 flex justify-center items-center mt-4 lg:mt-0">
+            <div class="text-center">
+                <div class="bg-custom-color py-8 px-10 rounded-lg mb-4 h-full flex flex-col justify-center"> 
+                    <div class="bg-white rounded p-4">
+                        <a href="product" class="block text-custom-color font-semibold hover:bg-hover-color hover:text-hover-text-color py-2 px-4 rounded mb-2" id="product">Product Management</a>
+                        <a href="supplier" class="block text-custom-color font-semibold hover:bg-hover-color hover:text-hover-text-color py-2 px-4 rounded mb-2" id="supplier">Supplier Management</a>
+                        <a href="bill" class="block text-custom-color font-semibold hover:bg-hover-color hover:text-hover-text-color py-2 px-4 rounded" id="bill">Bill Generation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Check if the browser supports notifications
+        if (!("Notification" in window)) {
+            console.log("This browser does not support desktop notification");
+        } else {
+            // Request permission for notifications
+            Notification.requestPermission().then(function (permission) {
+                console.log("Notification permission:", permission);
+            });
+        }
+
+        function handleProducts(products) {
+            products.forEach(function(product) {
+                var expiryDate = new Date(product.prodexp);
+                var today = new Date();
+                var daysDifference = Math.floor((expiryDate - today) / (1000 * 60 * 60 * 24)); 
+                
+                if (daysDifference <= 7) {
+                    if (Notification.permission === "granted") {
+                        if(daysDifference < 0) {
+                            var notification = new Notification(product.prodname + ' is expired!' );
+                        } else {
+                            var notification = new Notification(product.prodname + ' is about to expire in ' + daysDifference + ' days!');
+                        }
+                    }
+                }
+            });
+        }
+
+        fetch('/products_frontend') 
+            .then(response => response.json())
+            .then(data => {
+                handleProducts(data);
+            })
+            .catch(error => {
+                console.error('Error fetching products:', error);
+            });
+    </script>
+
+    <style>
+        .bg-custom-color {
+            background-color: rgb(20,101,112);
+        }
+        .text-custom-color {
+            color: rgb(20,101,112);
+        }
+        .hover\:bg-hover-color:hover {
+            background-color: rgb(175, 217, 223);
+        }
+        .hover\:text-hover-text-color:hover {
+            color: rgb(20, 101, 112);
+        }
+        body{
+            overflow:hidden;
+        }
+    </style>
+</body>
+</html>

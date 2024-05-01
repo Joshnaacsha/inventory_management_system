@@ -10,8 +10,20 @@ import com.example.demo.repository.LogRepo;
 public class LogService {
             @Autowired
             private LogRepo rep;
-            public login log(String username, String password){
-                login user = rep.findByUsernameAndPassword(username, password);
+            public login log(String email, String password){
+                login user = rep.findByEmailAndPassword(email, password);
                 return user;
             }
+            public boolean authenticate(login user) {
+                login storedUser = rep.findByEmail(user.getEmail());
+                if (storedUser.getEmail() != null && storedUser.getPassword().equals(user.getPassword())) {
+                    return true; 
+                } else {
+                    return false; 
+                }
+            }
+            public login findByEmail(String email) {
+                return rep.findByEmail(email);
+            }
+
 }

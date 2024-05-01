@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite parallel="false" name="Suite">
+  <test name="Test">
+    <classes>
+      <class name="NewTest"/>
+      <class name="RegTest"/>
+    </classes>
+  </test> 
+</suite> 

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - STOCKWISE</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-blue-200">
+
+    <nav class="bg-custom-color p-4 flex justify-between items-center">
+ 
+      <div class="flex items-center">
+          <a href="index" class="text-white mr-4"><i class="fas fa-arrow-left"></i> </a>
+      </div>
+      
+      <div class="flex items-center">
+          <img src="https://i.ibb.co/3cYVzsM/logo1.png" alt="Logo" class="h-16 w-16 mr-2">
+          <h1 class="text-white text-2xl font-semibold">STOCKWISE</h1>
+      </div>
+      <a href="#" class="text-white"></a>
+  </nav>
+    <div class="container mx-auto bg-gray-100 p-8 rounded-lg shadow-md mt-8">
+      <div class="flex justify-center items-center">
+        <div class="left-image flex-1 p-4">
+          <img src="https://i0.wp.com/whileshenaps.com/wp-content/uploads/2013/12/a-phone-on-a-blue-background-with-contact-us.jpg?resize=700%2C467&ssl=1" alt="image" class="w-full rounded-lg">
+        </div>
+        <form class="form-container flex-1 p-4" action="/contact" method="POST">
+          <h2 class="text-center text-lg font-bold mb-4">Contact Us</h2>
+          <label for="name" class="block font-semibold mb-1">Name:</label>
+          <input type="text" id="name" name="name" required class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+          <label for="email" class="block font-semibold mb-1">Email:</label>
+          <input type="email" id="email" name="email" required class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+          <label for="message" class="block font-semibold mb-1">Message:</label>
+          <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"></textarea>
+          <input type="submit" value="Send Message" class="w-full bg-green-500 text-white font-semibold py-2 rounded-lg transition duration-300 hover:bg-green-600 cursor-pointer">
+        </form>
+      </div>
+    </div>
+  <style>
+    .bg-custom-color {
+      background-color: rgb(20, 101, 112);
+    }
+  </style>
+</body>
+</html>
