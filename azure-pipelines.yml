@@ -6,7 +6,7 @@
 trigger:
 - main
 
-pool: Azure_Project
+pool: Joshna_Project
 
 steps:
 - task: Maven@4
